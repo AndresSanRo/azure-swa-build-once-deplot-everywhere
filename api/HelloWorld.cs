@@ -6,16 +6,16 @@ using Microsoft.Extensions.Logging;
 
 namespace api
 {
-    public class Function1
+    public class HelloWorld
     {
         private readonly ILogger _logger;
 
-        public Function1(ILoggerFactory loggerFactory)
+        public HelloWorld(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<Function1>();
+            _logger = loggerFactory.CreateLogger<HelloWorld>();
         }
 
-        [Function("Function1")]
+        [Function(nameof(HelloWorld))]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -23,7 +23,7 @@ namespace api
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions!");
+            response.WriteString("Hello world!");
 
             return response;
         }
