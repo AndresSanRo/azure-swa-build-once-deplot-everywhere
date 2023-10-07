@@ -19,16 +19,12 @@ namespace api.Functions
         }
 
         [Function("settings")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req, ExecutionContext context)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req, ExecutionContext context)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-            //response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-            //response.WriteString("Welcome to Azure Functions!");
-
-            var value = _appSettings;
-
+            await response.WriteAsJsonAsync(_appSettings);
             return response;
         }
     }
