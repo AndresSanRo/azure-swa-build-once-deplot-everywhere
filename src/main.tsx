@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { Settings } from "./env/settings.ts";
 
-fetch("http://localhost:7071/api/settings")
+fetch("/api/settings")
   .then(async (response) => {
     const environment: Settings = await response.json();
     ReactDOM.createRoot(document.getElementById("root")!).render(
