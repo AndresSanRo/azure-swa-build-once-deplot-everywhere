@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { Settings } from "./env/settings.ts";
+import { setSettings } from "./env/settings.ts";
 
 fetch("/api/settings")
   .then(async (response) => {
-    const environment: Settings = await response.json();
+    setSettings(await response.json());
     ReactDOM.createRoot(document.getElementById("root")!).render(
       <React.StrictMode>
-        <App {...environment} />
+        <App />
       </React.StrictMode>
     );
   })
