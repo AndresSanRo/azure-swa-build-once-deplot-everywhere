@@ -15,15 +15,22 @@ var host = new HostBuilder()
 
         config.AddAzureAppConfiguration(options =>
         {
-            options.Connect(appConfConnStr).Select(KeyFilter.Any, environment);
+            options
+                .Connect(appConfConnStr)
+                .Select(KeyFilter.Any, environment)
+                .ConfigureRefresh(refreshOptions =>
+                    refreshOptions.Register("Sentinel", refreshAll: true)); ;
         });        
     })
-    .ConfigureFunctionsWorkerDefaults()
     .ConfigureServices((host, services) =>
     {
+        services.AddAzureAppConfiguration();
         services.Configure<AppSettings>(host.Configuration.GetSection("Settings"));
-
     })
+    .ConfigureFunctionsWorkerDefaults(app =>
+    {
+        app.UseAzureAppConfiguration();
+    })    
     .Build();
 
 host.Run();

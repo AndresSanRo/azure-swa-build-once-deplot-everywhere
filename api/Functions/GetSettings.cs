@@ -12,7 +12,7 @@ namespace api.Functions
         private readonly ILogger _logger;
         private readonly AppSettings _appSettings;
 
-        public GetSettings(ILoggerFactory loggerFactory, IOptions<AppSettings> settings)
+        public GetSettings(ILoggerFactory loggerFactory, IOptionsSnapshot<AppSettings> settings)
         {
             _logger = loggerFactory.CreateLogger<GetSettings>();
             _appSettings = settings.Value;
